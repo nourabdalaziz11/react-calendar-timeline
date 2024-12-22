@@ -204,8 +204,8 @@ export interface IntervalRenderer<Data> {
 export interface Interval {
   startTime: Moment
   endTime: Moment
-  labelWidth: number
-  left: number
+  labelWidth?: number
+  left?: number
 }
 
 export interface HeaderContext {
