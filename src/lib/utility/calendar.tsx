@@ -83,7 +83,7 @@ export function iterateTimes(
   }
 
   while (time.valueOf() < end) {
-    const nextTime = moment(time).add(timeSteps[unit] || 1, unit as unitOfTime.Base)
+    const nextTime = moment(time).add(timeSteps[unit] || 1, unit as unitOfTime.Base).startOf(unit)
     callback(time, nextTime)
     time = nextTime
   }
