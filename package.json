@@ -10,13 +10,16 @@
     "test": "jest",
     "test:watch": "jest --watch"
   },
+  "main": "./dist/react-calendar-timeline.index.cjs.js",
+  "module": "./dist/react-calendar-timeline.index.es.js",
   "exports": {
     "./styles.css": "./dist/styles.css",
     ".": {
       "types": [
         "./dist/index.d.ts"
       ],
-      "import": "./dist/react-calendar-timeline.es.js"
+      "import": "./dist/react-calendar-timeline.index.es.js",
+      "require": "./dist/react-calendar-timeline.index.cjs.js"
     }
   },
   "types": "./dist/index.d.ts",
