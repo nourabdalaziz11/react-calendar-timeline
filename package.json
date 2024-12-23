@@ -1,5 +1,5 @@
 {
-  "name": "fts-react-calendar-timeline",
+  "name": "r365-v2-react-calendar-timeline",
   "version": "0.30.0-beta.2",
   "description": "react-calendar-timeline",
   "packageManager": "npm@10.1.0",
@@ -10,16 +10,13 @@
     "test": "jest",
     "test:watch": "jest --watch"
   },
-  "main": "./dist/react-calendar-timeline.umd.js",
-  "module": "./dist/react-calendar-timeline.es.js",
   "exports": {
     "./styles.css": "./dist/styles.css",
     ".": {
       "types": [
         "./dist/index.d.ts"
       ],
-      "import": "./dist/react-calendar-timeline.es.js",
-      "require": "./dist/react-calendar-timeline.umd.js"
+      "import": "./dist/react-calendar-timeline.es.js"
     }
   },
   "types": "./dist/index.d.ts",
