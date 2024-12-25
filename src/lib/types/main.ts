@@ -250,3 +250,5 @@ export type ElementWithSecret = ReactElement & {
     secretKey: string
   }
 }
+
+export type CanvasWidthFactor = 1 | 3
