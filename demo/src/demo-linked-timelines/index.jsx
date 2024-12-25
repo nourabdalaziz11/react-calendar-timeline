@@ -75,6 +75,7 @@ export default class App extends Component {
         visibleTimeStart={visibleTimeStart}
         visibleTimeEnd={visibleTimeEnd}
         onTimeChange={this.handleTimeChangeFirst}
+        resizableCanvas={true}
       />
     )
   }

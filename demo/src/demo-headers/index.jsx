@@ -9,18 +9,14 @@ import Timeline, {
   SidebarHeader,
   CustomHeader,
   TimelineHeaders,
-  DateHeader
+  DateHeader,
 } from 'react-calendar-timeline'
 
 import generateFakeData from '../generate-fake-data'
 import moment from 'moment'
 
-var minTime = moment()
-  .add(-6, 'months')
-  .valueOf()
-var maxTime = moment()
-  .add(6, 'months')
-  .valueOf()
+var minTime = moment().add(-6, 'months').valueOf()
+var maxTime = moment().add(6, 'months').valueOf()
 
 var keys = {
   groupIdKey: 'id',
@@ -31,7 +27,7 @@ var keys = {
   itemDivTitleKey: 'title',
   itemGroupKey: 'group',
   itemTimeStartKey: 'start',
-  itemTimeEndKey: 'end'
+  itemTimeEndKey: 'end',
 }
 
 export default class App extends Component {
@@ -39,13 +35,8 @@ export default class App extends Component {
     super(props)
 
     const { groups, items } = generateFakeData()
-    const defaultTimeStart = moment()
-      .startOf('day')
-      .toDate()
-    const defaultTimeEnd = moment()
-      .startOf('day')
-      .add(1, 'day')
-      .toDate()
+    const defaultTimeStart = moment().startOf('day').toDate()
+    const defaultTimeEnd = moment().startOf('day').add(1, 'day').toDate()
 
     this.state = {
       groups,
@@ -53,7 +44,7 @@ export default class App extends Component {
       defaultTimeStart,
       defaultTimeEnd,
       format: false,
-      showHeaders: false
+      showHeaders: false,
     }
   }
 
@@ -95,16 +86,15 @@ export default class App extends Component {
     const group = groups[newGroupOrder]
 
     this.setState({
-      items: items.map(
-        item =>
-          item.id === itemId
-            ? Object.assign({}, item, {
-                start: dragTime,
-                end: dragTime + (item.end - item.start),
-                group: group.id
-              })
-            : item
-      )
+      items: items.map((item) =>
+        item.id === itemId
+          ? Object.assign({}, item, {
+              start: dragTime,
+              end: dragTime + (item.end - item.start),
+              group: group.id,
+            })
+          : item,
+      ),
     })
 
     console.log('Moved', itemId, dragTime, newGroupOrder)
@@ -114,15 +104,14 @@ export default class App extends Component {
     const { items } = this.state
 
     this.setState({
-      items: items.map(
-        item =>
-          item.id === itemId
-            ? Object.assign({}, item, {
-                start: edge === 'left' ? time : item.start,
-                end: edge === 'left' ? item.end : time
-              })
-            : item
-      )
+      items: items.map((item) =>
+        item.id === itemId
+          ? Object.assign({}, item, {
+              start: edge === 'left' ? time : item.start,
+              end: edge === 'left' ? item.end : time,
+            })
+          : item,
+      ),
     })
 
     console.log('Resized', itemId, time, edge)
@@ -143,8 +132,7 @@ export default class App extends Component {
 
   moveResizeValidator = (action, item, time) => {
     if (time < new Date().getTime()) {
-      var newTime =
-        Math.ceil(new Date().getTime() / (15 * 60 * 1000)) * (15 * 60 * 1000)
+      var newTime = Math.ceil(new Date().getTime() / (15 * 60 * 1000)) * (15 * 60 * 1000)
       return newTime
     }
 
@@ -152,8 +140,8 @@ export default class App extends Component {
   }
 
   handleClickChangeHeaders = () => {
-    this.setState(state => ({
-      showHeaders: !state.showHeaders
+    this.setState((state) => ({
+      showHeaders: !state.showHeaders,
     }))
   }
 
@@ -165,6 +153,7 @@ export default class App extends Component {
         <button onClick={this.handleClick}>format</button>
         <button onClick={this.handleClickChangeHeaders}>add headers</button>
         <Timeline
+          resizableCanvas={true}
           groups={groups}
           items={items}
           keys={keys}
@@ -194,34 +183,22 @@ export default class App extends Component {
           rightSidebarContent={<div>Above The Right</div>}
         >
           <TimelineHeaders className="header-background">
-            <SidebarHeader/>
-            <DateHeader
-              labelFormat={this.state.format ? 'd' : undefined}
-              unit= "primaryHeader"
-            />
+            <SidebarHeader />
+            <DateHeader labelFormat={this.state.format ? 'd' : undefined} unit="primaryHeader" />
             <DateHeader height={50} />
             <CustomHeader unit="year" headerData={{ hey: 'you' }}>
-              {(
-                {
-                  headerContext: { intervals },
-                  getRootProps,
-                  getIntervalProps,
-                  showPeriod,
-                  data,
-                },
-                
-              ) => {
+              {({ headerContext: { intervals }, getRootProps, getIntervalProps, showPeriod, data }) => {
                 console.log('props', data)
                 return (
                   <div {...getRootProps()}>
-                    {intervals.map(interval => {
+                    {intervals.map((interval) => {
                       const intervalStyle = {
                         lineHeight: '30px',
                         textAlign: 'center',
                         borderLeft: '1px solid black',
                         cursor: 'pointer',
                         backgroundColor: 'Turquoise',
-                        color: 'white'
+                        color: 'white',
                       }
                       return (
                         <div
@@ -230,12 +207,10 @@ export default class App extends Component {
                           }}
                           {...getIntervalProps({
                             interval,
-                            style: intervalStyle
+                            style: intervalStyle,
                           })}
                         >
-                          <div className="sticky">
-                            {interval.startTime.format('YYYY')}
-                          </div>
+                          <div className="sticky">{interval.startTime.format('YYYY')}</div>
                         </div>
                       )
                     })}
@@ -244,22 +219,17 @@ export default class App extends Component {
               }}
             </CustomHeader>
             <CustomHeader unit="week">
-              {({
-                headerContext: { intervals },
-                getRootProps,
-                getIntervalProps,
-                showPeriod
-              }) => {
+              {({ headerContext: { intervals }, getRootProps, getIntervalProps, showPeriod }) => {
                 return (
                   <div {...getRootProps()}>
-                    {intervals.map(interval => {
+                    {intervals.map((interval) => {
                       const intervalStyle = {
                         lineHeight: '30px',
                         textAlign: 'center',
                         borderLeft: '1px solid black',
                         cursor: 'pointer',
                         backgroundColor: 'indianred',
-                        color: 'white'
+                        color: 'white',
                       }
                       return (
                         <div
@@ -268,12 +238,10 @@ export default class App extends Component {
                           }}
                           {...getIntervalProps({
                             interval,
-                            style: intervalStyle
+                            style: intervalStyle,
                           })}
                         >
-                          <div className="sticky">
-                            {interval.startTime.format('MM/DD')}
-                          </div>
+                          <div className="sticky">{interval.startTime.format('MM/DD')}</div>
                         </div>
                       )
                     })}
@@ -282,20 +250,15 @@ export default class App extends Component {
               }}
             </CustomHeader>
             <CustomHeader>
-              {({
-                headerContext: { intervals },
-                getRootProps,
-                getIntervalProps,
-                showPeriod
-              }) => {
+              {({ headerContext: { intervals }, getRootProps, getIntervalProps, showPeriod }) => {
                 return (
                   <div {...getRootProps()}>
-                    {intervals.map(interval => {
+                    {intervals.map((interval) => {
                       const intervalStyle = {
                         lineHeight: '30px',
                         textAlign: 'center',
                         borderLeft: '1px solid black',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }
                       return (
                         <div
@@ -304,7 +267,7 @@ export default class App extends Component {
                           }}
                           {...getIntervalProps({
                             interval,
-                            style: intervalStyle
+                            style: intervalStyle,
                           })}
                         >
                           {interval.startTime.format('HH')}
@@ -320,43 +283,22 @@ export default class App extends Component {
               labelFormat="MM/DD"
               height={50}
               headerData={{ hey: 'date header' }}
-              intervalRenderer={(
-                { getIntervalProps, intervalContext, data },
-                
-              ) => {
+              intervalRenderer={({ getIntervalProps, intervalContext, data }) => {
                 console.log('intervalRenderer props', data)
-                return (
-                  <div {...getIntervalProps()}>
-                    {intervalContext.intervalText}
-                  </div>
-                )
+                return <div {...getIntervalProps()}>{intervalContext.intervalText}</div>
               }}
             />
             {this.state.showHeaders
               ? [
-                  <DateHeader
-                    labelFormat={this.state.format ? 'd' : undefined}
-                    unit = "primaryHeader"
-                  />,
-                  <DateHeader height={50} />
+                  <DateHeader labelFormat={this.state.format ? 'd' : undefined} unit="primaryHeader" />,
+                  <DateHeader height={50} />,
                 ]
               : null}
           </TimelineHeaders>
           <TimelineMarkers>
             <TodayMarker />
-            <CustomMarker
-              date={
-                moment()
-                  .startOf('day')
-                  .valueOf() +
-                1000 * 60 * 60 * 2
-              }
-            />
-            <CustomMarker
-              date={moment()
-                .add(3, 'day')
-                .valueOf()}
-            >
+            <CustomMarker date={moment().startOf('day').valueOf() + 1000 * 60 * 60 * 2} />
+            <CustomMarker date={moment().add(3, 'day').valueOf()}>
               {({ styles }) => {
                 const newStyles = { ...styles, backgroundColor: 'blue' }
                 return <div style={newStyles} />
