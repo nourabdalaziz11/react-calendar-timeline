@@ -2,6 +2,7 @@
 import { _get } from './generic'
 import { Dimension, ItemDimension } from '../types/dimension'
 import {
+  CanvasWidthFactor,
   GroupedItem,
   GroupOrders,
   GroupStack,
@@ -548,8 +549,8 @@ export function stackTimelineItems<
  * get canvas width factor
  * @param {*} shouldExpandCanvas
  */
-export function getCanvasWidthFactor(shouldExpandCanvas = true) {
-  return shouldExpandCanvas? 3 : 1;
+export function getCanvasWidthFactor(shouldExpandCanvas: boolean = true): CanvasWidthFactor {
+  return shouldExpandCanvas ? 3 : 1;
 }
 
 /**
