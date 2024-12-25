@@ -1,6 +1,6 @@
 {
   "name": "r365-upgraded-react-calendar-timeline",
-  "version": "0.30.0-beta.2",
+  "version": "0.30.1-beta.2",
   "description": "react-calendar-timeline",
   "packageManager": "npm@10.1.0",
   "scripts": {
