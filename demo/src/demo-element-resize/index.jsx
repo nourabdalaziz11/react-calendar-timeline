@@ -56,6 +56,7 @@ export default class App extends Component {
       <div>
         <div style={{ width: `${width}%`, float: 'left' }}>
           <Timeline
+            resizableCanvas={true}
             groups={groups}
             items={items}
             keys={keys}

@@ -6,12 +6,8 @@ import Timeline from 'react-calendar-timeline'
 import generateFakeData from '../generate-fake-data'
 import moment from 'moment'
 
-var minTime = moment()
-  .add(-6, 'months')
-  .valueOf()
-var maxTime = moment()
-  .add(6, 'months')
-  .valueOf()
+var minTime = moment().add(-6, 'months').valueOf()
+var maxTime = moment().add(6, 'months').valueOf()
 
 var keys = {
   groupIdKey: 'id',
@@ -22,7 +18,7 @@ var keys = {
   itemDivTitleKey: 'title',
   itemGroupKey: 'group',
   itemTimeStartKey: 'start',
-  itemTimeEndKey: 'end'
+  itemTimeEndKey: 'end',
 }
 
 export default class App extends Component {
@@ -30,19 +26,14 @@ export default class App extends Component {
     super(props)
 
     const { groups, items } = generateFakeData()
-    const defaultTimeStart = moment()
-      .startOf('day')
-      .toDate()
-    const defaultTimeEnd = moment()
-      .startOf('day')
-      .add(1, 'day')
-      .toDate()
+    const defaultTimeStart = moment().startOf('day').toDate()
+    const defaultTimeEnd = moment().startOf('day').add(1, 'day').toDate()
 
     this.state = {
       groups,
       items,
       defaultTimeStart,
-      defaultTimeEnd
+      defaultTimeEnd,
     }
   }
 
@@ -76,16 +67,15 @@ export default class App extends Component {
     const group = groups[newGroupOrder]
 
     this.setState({
-      items: items.map(
-        item =>
-          item.id === itemId
-            ? Object.assign({}, item, {
+      items: items.map((item) =>
+        item.id === itemId
+          ? Object.assign({}, item, {
               start: dragTime,
               end: dragTime + (item.end - item.start),
-              group: group.id
+              group: group.id,
             })
-            : item
-      )
+          : item,
+      ),
     })
 
     console.log('Moved', itemId, dragTime, newGroupOrder)
@@ -95,15 +85,14 @@ export default class App extends Component {
     const { items } = this.state
 
     this.setState({
-      items: items.map(
-        item =>
-          item.id === itemId
-            ? Object.assign({}, item, {
+      items: items.map((item) =>
+        item.id === itemId
+          ? Object.assign({}, item, {
               start: edge === 'left' ? time : item.start,
-              end: edge === 'left' ? item.end : time
+              end: edge === 'left' ? item.end : time,
             })
-            : item
-      )
+          : item,
+      ),
     })
 
     console.log('Resized', itemId, time, edge)
@@ -124,24 +113,17 @@ export default class App extends Component {
 
   moveResizeValidator = (action, item, time, resizeEdge) => {
     if (time < new Date().getTime()) {
-      var newTime =
-        Math.ceil(new Date().getTime() / (15 * 60 * 1000)) * (15 * 60 * 1000)
+      var newTime = Math.ceil(new Date().getTime() / (15 * 60 * 1000)) * (15 * 60 * 1000)
       return newTime
     }
 
     return time
   }
 
-  itemRenderer = ({
-    item,
-    timelineContext,
-    itemContext,
-    getItemProps,
-    getResizeProps,
-  }) => {
+  itemRenderer = ({ item, timelineContext, itemContext, getItemProps, getResizeProps }) => {
     const { left: leftResizeProps, right: rightResizeProps } = getResizeProps()
-    const backgroundColor = itemContext.selected ? itemContext.dragging ? 'red' : item.selectedBgColor : item.bgColor;
-    const borderColor = itemContext.resizing ? 'red' : item.color;
+    const backgroundColor = itemContext.selected ? (itemContext.dragging ? 'red' : item.selectedBgColor) : item.bgColor
+    const borderColor = itemContext.resizing ? 'red' : item.color
     return (
       <div
         {...getItemProps({
@@ -154,29 +136,24 @@ export default class App extends Component {
             borderRadius: 4,
             borderLeftWidth: itemContext.selected ? 3 : 1,
             borderRightWidth: itemContext.selected ? 3 : 1,
-          }
-        }) }
+          },
+        })}
       >
-        {itemContext.useResizeHandle ? (
-          <div {...leftResizeProps} />
-        ) : null}
+        {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : null}
 
         <div
           style={{
             height: itemContext.dimensions.height,
             overflow: 'hidden',
-            paddingLeft:3,
+            paddingLeft: 3,
             textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap'
+            whiteSpace: 'nowrap',
           }}
         >
           {itemContext.title}
         </div>
 
-
-        {itemContext.useResizeHandle ? (
-          <div {...rightResizeProps} />
-        ) : null}
+        {itemContext.useResizeHandle ? <div {...rightResizeProps} /> : null}
       </div>
     )
   }
@@ -194,6 +171,7 @@ export default class App extends Component {
     console.log("render")
     return (
       <Timeline
+        resizableCanvas={true}
         groups={groups}
         items={items}
         keys={keys}
